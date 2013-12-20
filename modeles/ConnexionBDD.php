@@ -3,7 +3,7 @@
 	
 		protected $connexion;
 		
-		function __construct(){
+		function __construct(){ // Initialisation de l'objet PDO
 			$dsn = "mysql:host=localhost;dbname=nombdd";
 			$user = "root";
 			$pass = "";
@@ -14,7 +14,7 @@
 			}
 		}
 
-		function getConnexion(){
+		function getConnexion(){ // Retourne l'objet PDO
 			return $this->connexion;
 		}
 	}
