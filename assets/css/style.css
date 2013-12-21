@@ -3,6 +3,7 @@
 body{
 	margin: 0px;
 	padding: 0px;
+	font-family: Tahoma, Verdana, sans-serif;
 }
 
 /* Menu */
@@ -11,3 +12,40 @@ body{
 
 /* Pages */
 
+.bleu{
+	color: #37769f;
+}
+
+.jumbotron{
+	padding-left: 10%;
+}
+
+.boutonHome{
+	background-color: #37769f;
+	height: 50px;
+	width: 200px;
+	margin-right: 50px;
+}
+
+.formulaire{
+	visibility: hidden;
+}
+
+.formulaire_visible{
+	visibility: visible;
+}
+
+.visible{
+	visibility: visible;
+}
+
+.invisible{
+	visibility: hidden;
+}
+
+@media screen and (min-width: 900px){
+	.jumbotron .pull-right{
+		position: relative;
+		top: -175px;
+	}	
+}
