@@ -1,16 +1,40 @@
 <?php
+	include("ConnexionBDD.php");
+	include("Utilisateur.php");
+	include("Connectes.php");
+	include("Conversation.php");
+	include("Message.php");
+
 	class Manager{
 	
 		protected $connexion;
-		protected $listeConnectes;
 		
 		function __construct(){ // Constructeur, initialisation d'un objet ConnexionBDD
-
+			$this->connexion = new ConnexionBDD();
 		}
 
 		function creerUtilisateur($login, $motDePasse){ // Créée un utilisateur dans la BDD et renvoie son objet
+			try{
+				$reqLogin = $this->connexion->getConnexion()->prepare('SELECT COUNT(id) FROM utilisateurs WHERE login = ?');
+				$reqLogin->execute(Array($login));
+				$loginExiste = $reqLogin->fetch();
+				if ($loginExiste) {
+					$message = "<p>Le login que vous avez choisi est déjà pris, veuillez en choisir un nouveau.</p>";
+				}else{
+					$req = $this->connexion->getConnexion()->prepare('INSERT INTO utilisateurs VALUES (0, ?, ?, "defaut.jpg")');
+					$req->execute(Array($login,md5($motDePasse)));
+					// ajouter l'objet utilisateur à la session
+					$message = "<p>Inscription réussie!</p>";
+				}
+			}catch(PDOException $e){
+				$message = "<p>une erreur est survenue, veuillez réessayer.</p>";
+			}
+			return $message;
+		}
 
-			return $utilisateur;
+		function estConnecte(){
+
+			return $booleen;
 		}
 
 		function connexionUtilisateur($login, $motDePasse){ // Connecte un utilisateur : renvoie l'objet utilisateur ou une chaîne
@@ -47,11 +71,15 @@
 
 		}
 
-		// Getters simples
+		function ajoutConnecte($idUtilisateur){
 
-		function getListeConnectes(){
+			$listeConnectes = $this->MaJListeConnectes();
+			return $listeConnectes;
+		}
+
+		function MaJListeConnectes(){
 			
-			return $this->listeConnectes;
+			return $listeConnectes;
 		}
 
 	}

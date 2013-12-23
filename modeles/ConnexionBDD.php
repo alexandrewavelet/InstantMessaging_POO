@@ -4,7 +4,7 @@
 		protected $connexion;
 		
 		function __construct(){ // Initialisation de l'objet PDO
-			$dsn = "mysql:host=localhost;dbname=nombdd";
+			$dsn = "mysql:host=localhost;dbname=instantmessaging";
 			$user = "root";
 			$pass = "";
 			try {

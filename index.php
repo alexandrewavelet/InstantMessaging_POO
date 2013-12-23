@@ -20,17 +20,17 @@
 
 		<div class="pull-right">
 			<h1>Accéder à <span class="bleu">Instant</span>Messaging</h1>
-			<form role="form">
+			<form role="form" method="POST" action="cMessagerie.php?action=login">
 				<div class="form-group">
 					<label for="login">Login</label>
-					<input type="text" class="form-control" id="login" placeholder="Login">
+					<input type="text" class="form-control" id="login" name="login" placeholder="Login">
 				</div>
 				<div class="form-group">
 					<label for="mdp">Mot de passe</label>
-					<input type="password" class="form-control" id="mdp" placeholder="Mot de passe">		
+					<input type="password" class="form-control" id="mdp" name="mdp" placeholder="Mot de passe">		
 				</div>
-				<button type="submit" class="boutonHome">S'inscrire</button>
-				<button type="submit" class="boutonHome">Se connecter</button>
+				<button type="submit" class="boutonHome" id="inscription" name="inscription">S'inscrire</button>
+				<button type="submit" class="boutonHome" id="connexion" name="connexion">Se connecter</button>
 			</form>
 		</div>
 

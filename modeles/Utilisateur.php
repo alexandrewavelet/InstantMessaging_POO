@@ -4,6 +4,7 @@
 		protected $id;
 		protected $login;
 		protected $conversations;
+		protected $photo;
 		
 		function __construct(){ // Constructeur
 
