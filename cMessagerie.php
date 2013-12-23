@@ -1,8 +1,9 @@
 <?php
+	session_start();
 
 	include("modeles/Manager.php");
+
 	$monManager = new Manager();
-	// Ajouter à la session
 
 	if (isset($_GET['action'])) {
 		$action = $_GET['action'];
@@ -13,7 +14,7 @@
 	switch ($action) {
 		case 'login':
 			if (isset($_POST['connexion'])) {
-				$message = "<p>Connexion !</p>";
+				$message = $monManager->connexionUtilisateur($_POST['login'], $_POST['mdp']);
 			}elseif (isset($_POST['inscription'])) {
 				$message = $monManager->creerUtilisateur($_POST['login'], $_POST['mdp']);
 			}

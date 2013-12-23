@@ -6,8 +6,11 @@
 		protected $conversations;
 		protected $photo;
 		
-		function __construct(){ // Constructeur
-
+		function __construct($pid,$plogin,$pphoto){ // Constructeur
+			$this->id = $pid;
+			$this->login = $plogin;
+			$this->photo = $pphoto;
+			$this->conversations = array();
 		}
 
 		function getConversationAvec($idUtilisateur){ // Retourne la conversation avec l'utilisateur en paramètre, la créée sinon

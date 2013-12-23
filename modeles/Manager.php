@@ -15,15 +15,16 @@
 
 		function creerUtilisateur($login, $motDePasse){ // Créée un utilisateur dans la BDD et renvoie son objet
 			try{
-				$reqLogin = $this->connexion->getConnexion()->prepare('SELECT COUNT(id) FROM utilisateurs WHERE login = ?');
-				$reqLogin->execute(Array($login));
-				$loginExiste = $reqLogin->fetch();
-				if ($loginExiste) {
+				$reqLogin = $this->connexion->getConnexion()->prepare('SELECT COUNT(id) as nombre FROM utilisateurs WHERE login = ?');
+				$reqLogin->execute(array($login));
+				$loginExiste = $reqLogin->fetch()['nombre'];
+				if ($loginExiste > 0) {
 					$message = "<p>Le login que vous avez choisi est déjà pris, veuillez en choisir un nouveau.</p>";
 				}else{
 					$req = $this->connexion->getConnexion()->prepare('INSERT INTO utilisateurs VALUES (0, ?, ?, "defaut.jpg")');
-					$req->execute(Array($login,md5($motDePasse)));
-					// ajouter l'objet utilisateur à la session
+					$req->execute(array($login,md5($motDePasse)));
+					$idUtilisateur = $this->connexion->getConnexion()->lastInsertId();
+					$_SESSION['utilisateur'] = new Utilisateur($idUtilisateur, $login, "defaut.jpg");
 					$message = "<p>Inscription réussie!</p>";
 				}
 			}catch(PDOException $e){
@@ -32,14 +33,30 @@
 			return $message;
 		}
 
-		function estConnecte(){
-
+		function estConnecte(){ // Retourne vrai si un utilisateur est connecté, faux sinon
+			$booleen = false;
+			if (isset($_SESSION['utilisateur'])) {
+				$booleen = true;
+			}
 			return $booleen;
 		}
 
-		function connexionUtilisateur($login, $motDePasse){ // Connecte un utilisateur : renvoie l'objet utilisateur ou une chaîne
-
-			return $reponse;
+		function connexionUtilisateur($login, $motDePasse){ // Connecte un utilisateur : renvoie une chaîne et place l'objet utilisateur en session
+			try{
+				$motDePasse = md5($motDePasse);
+				$req = $this->connexion->getConnexion()->prepare('SELECT id, photo FROM utilisateurs WHERE login = ? AND mdp = ?');
+				$req->execute(array($login, $motDePasse));
+				$res = $req->fetch();
+				if (isset($res['id'])) {
+					$_SESSION['utilisateur'] = new Utilisateur($res['id'], $login, $res['photo']);
+					$message = "<p>Connexion réussie!</p>";
+				}else{
+					$message = "<p>La combinaison login/mot de passe est incorrecte.</p>";
+				}
+			}catch(PDOException $e){
+				$message = "<p>Une erreur est survenue, veuillez réessayer.</p>";
+			}
+			return $message;
 		}
 
 		function getUtilisateur($idUtilisateur){ // Créée un objet Utilisateur correspondant à l'id en paramètre
