@@ -1,9 +1,4 @@
 <?php
-	include("ConnexionBDD.php");
-	include("Utilisateur.php");
-	include("Connectes.php");
-	include("Conversation.php");
-	include("Message.php");
 
 	class Manager{
 	
@@ -25,7 +20,8 @@
 					$req->execute(array($login,md5($motDePasse)));
 					$idUtilisateur = $this->connexion->getConnexion()->lastInsertId();
 					$_SESSION['utilisateur'] = new Utilisateur($idUtilisateur, $login, "defaut.jpg");
-					$message = "<p>Inscription réussie!</p>";
+					$this->ajoutConnecte($res['id']);
+					$message = "<p>Inscription réussie, vous pouvez commencer à utiliser la messagerie.</p>";
 				}
 			}catch(PDOException $e){
 				$message = "<p>une erreur est survenue, veuillez réessayer.</p>";
@@ -49,7 +45,8 @@
 				$res = $req->fetch();
 				if (isset($res['id'])) {
 					$_SESSION['utilisateur'] = new Utilisateur($res['id'], $login, $res['photo']);
-					$message = "<p>Connexion réussie!</p>";
+					$message = "<p>Connexion réussie.</p>";
+					$this->ajoutConnecte($res['id']);
 				}else{
 					$message = "<p>La combinaison login/mot de passe est incorrecte.</p>";
 				}
@@ -84,19 +81,35 @@
 			return $conversation;
 		}
 
-		function rafraichirListeConnectes($idUtilisateur = 0){ // Actualise la liste des connectés
-
+		function ajoutConnecte($idUtilisateur){ // Ajoute l'utilisateur qui se connecte et met un objet Connectes en session
+			$reqAjout = $this->connexion->getConnexion()->prepare('INSERT INTO connectes (idUtilisateur) VALUES (?)');
+			$reqAjout->execute(array($idUtilisateur));
+			$_SESSION['listeConnectes'] = new Connectes();
+			$this->MaJListeConnectes();
 		}
 
-		function ajoutConnecte($idUtilisateur){
-
-			$listeConnectes = $this->MaJListeConnectes();
-			return $listeConnectes;
+		function MaJListeConnectes(){ // Met à jour la liste des connectés et le timestamp de l'utilisateur courant
+			$reqMaJ = $this->connexion->getConnexion()->prepare('UPDATE connectes SET derniereInteraction = UNIX_TIMESTAMP() WHERE idUtilisateur = ?');
+			$reqMaJ->execute(array($_SESSION['utilisateur']->getId()));
+			$this->supprimerConnectesInactifs();
+			$connectes = array();
+			$req = $this->connexion->getConnexion()->query('SELECT idUtilisateur FROM connectes');
+			while($ligne = $req->fetch()){
+				$utilisateur = $ligne[0];
+				array_push($connectes, $utilisateur);
+			}
+			$_SESSION['listeConnectes']->MaJListe($connectes);
 		}
 
-		function MaJListeConnectes(){
-			
-			return $listeConnectes;
+		function supprimerConnectesInactifs(){
+			$reqSuppression = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE TIMESTAMPDIFF(MINUTE, FROM_UNIXTIME(derniereInteraction), NOW()) > 5');
+			$reqSuppression->execute(array());
+		}
+
+		function deconnexionUtilisateur(){ // Supprime l'utilisateur des membres connectés
+			$reqDeconnexion = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE id = ?');
+			$reqDeconnexion->execute(array($_SESSION['utilisateur']->getId()));
+			$this->supprimerConnectesInactifs();
 		}
 
 	}

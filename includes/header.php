@@ -13,8 +13,8 @@
 	<div class="row gris">
 		<div class="col-md-3 col-md-offset-1">
 			<h1><span class="bleu">Instant</span>Messaging</h1>
-			<button class="boutonHome petit"><span class="glyphicon glyphicon-home"></span></button>
-			<button class="boutonHome">Déconnexion</button>
+			<a href="cMessagerie.php?action=home"><button class="boutonHome petit"><span class="glyphicon glyphicon-home"></span></button></a>
+			<a href="index.php?action=logout"><button class="boutonHome sansMarge">Déconnexion</button></a>
 		</div>
 		<div class="col-md-8">
 		</div>

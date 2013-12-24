@@ -1,3 +1,24 @@
+<?php
+
+	session_start();
+
+	function __autoload($class)
+	{
+		static $classDir = '/modeles';
+		$file = str_replace('\\', DIRECTORY_SEPARATOR, ltrim($class, '\\')) . '.php';
+		require "$classDir/$file";
+	}
+
+	if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+		include('modeles/Manager.php');
+		$monManager = new Manager();
+		$monManager->deconnexionUtilisateur();
+		session_unset();
+		session_destroy();
+	}
+
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -40,17 +61,17 @@
 			<ul>
 				<li>Classes objet abstraites</li>
 				<li>Page d'accueil</li>
+				<li>Création de la BDD</li>
+				<li>Inscription / Connexion</li>
 			</ul>
 			<p>Fonctionnalités à venir :</p>
 			<ul>
-				<li>Création de la BDD</li>
-				<li>Inscription / Connexion</li>
 				<li>Interface de discussion / landing</li>
 				<li>Liste des connectés</li>
 				<li>Système de discussion</li>
-				<li>Ajax</li>
+				<li>Ajax (xAjax)</li>
 			</ul>
-			<p>Code source disponible sur GitHub : <a href="">InstantMessaging</a></p>
+			<p>Code source disponible sur GitHub : <a href="https://github.com/alexandrewavelet/InstantMessaging_POO/">InstantMessaging</a></p>
 		</div>
 
 	</div>

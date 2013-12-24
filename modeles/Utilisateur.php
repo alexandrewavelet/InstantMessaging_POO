@@ -48,5 +48,9 @@
 			return $this->conversations;
 		}
 
+		function getPhoto(){
+			return $this->photo;
+		}
+
 	}
 ?>

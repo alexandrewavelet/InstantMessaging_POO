@@ -29,8 +29,11 @@ body{
 
 .petit{
 	width: 50px !important;
-	display: inline-block;
 	margin-right: 10px;
+}
+
+.sansMarge{
+	margin-right: 0px;
 }
 
 .gris{

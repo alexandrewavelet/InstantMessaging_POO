@@ -3,12 +3,12 @@
 	
 		protected $listeConnectes;
 		
-		function __construct($listeConnectes){ // Constructeur
-
+		function __construct($liste = array()){ // Constructeur
+			$this->listeConnectes = $liste;
 		}
 
-		function MaJListe(){
-			
+		function MaJListe($liste){ // Mise à jour de la liste
+			$this->listeConnectes = $liste;
 		}
 
 	}

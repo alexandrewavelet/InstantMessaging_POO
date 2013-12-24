@@ -1,6 +1,13 @@
 <?php
 	session_start();
 
+	function __autoload($class)
+	{
+		static $classDir = '/modeles';
+		$file = str_replace('\\', DIRECTORY_SEPARATOR, ltrim($class, '\\')) . '.php';
+		require "$classDir/$file";
+	}
+
 	include("modeles/Manager.php");
 
 	$monManager = new Manager();
@@ -25,7 +32,7 @@
 		
 		default:
 			$messageErreur = "<p>Désolé, une erreur est survenue.</p>";
-			include("vue/erreur.php");
+			include("vues/erreur.php");
 			break;
 	}
 
