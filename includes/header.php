@@ -22,6 +22,7 @@
 	<div class="row">
 		<div class="col-md-3 col-md-offset-1">
 			<h2>Conversations</h2>
+			<?php echo $_SESSION['listeConnectes']->afficherListe(); ?>
 		</div>
 		<div class="col-md-8">
 			<h2>Mon profil</h2>

@@ -1,5 +1,7 @@
 <?php
 
+	include("includes/header.php");
+
 	if (isset($message)) {
 		echo $message;
 		
@@ -33,3 +35,9 @@
 		</div>
 	</div>
 </div>
+
+<?php
+
+	include("includes/footer.php");
+
+?>

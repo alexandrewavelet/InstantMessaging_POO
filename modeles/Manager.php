@@ -16,11 +16,11 @@
 				if ($loginExiste > 0) {
 					$message = "<p>Le login que vous avez choisi est déjà pris, veuillez en choisir un nouveau.</p>";
 				}else{
-					$req = $this->connexion->getConnexion()->prepare('INSERT INTO utilisateurs VALUES (0, ?, ?, "defaut.jpg")');
+					$req = $this->connexion->getConnexion()->prepare('INSERT INTO utilisateurs VALUES (0, ?, ?, "avatar-defaut.jpg")');
 					$req->execute(array($login,md5($motDePasse)));
 					$idUtilisateur = $this->connexion->getConnexion()->lastInsertId();
-					$_SESSION['utilisateur'] = new Utilisateur($idUtilisateur, $login, "defaut.jpg");
-					$this->ajoutConnecte($res['id']);
+					$_SESSION['utilisateur'] = new Utilisateur($idUtilisateur, $login, "avatar-defaut.jpg");
+					$this->ajoutConnecte($idUtilisateur);
 					$message = "<p>Inscription réussie, vous pouvez commencer à utiliser la messagerie.</p>";
 				}
 			}catch(PDOException $e){
@@ -128,9 +128,9 @@
 			$reqMaJ->execute(array($_SESSION['utilisateur']->getId()));
 			$this->supprimerConnectesInactifs();
 			$connectes = array();
-			$req = $this->connexion->getConnexion()->query('SELECT idUtilisateur FROM connectes');
+			$req = $this->connexion->getConnexion()->query('SELECT idUtilisateur, login, photo FROM connectes, utilisateurs WHERE id = idUtilisateur');
 			while($ligne = $req->fetch()){
-				$utilisateur = $ligne[0];
+				$utilisateur = new Utilisateur($ligne[0],$ligne[1],$ligne[2]);
 				array_push($connectes, $utilisateur);
 			}
 			$_SESSION['listeConnectes']->MaJListe($connectes);

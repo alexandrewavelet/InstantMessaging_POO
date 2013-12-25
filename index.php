@@ -64,11 +64,11 @@
 				<li>Création de la BDD</li>
 				<li>Inscription / Connexion</li>
 				<li>Splashscreen (et inteface connectés, dialogue) : en cours</li>
+				<li>Changement d'avatar</li>
+				<li>Liste des connectés</li>
 			</ul>
 			<p>Fonctionnalités à venir :</p>
 			<ul>
-				<li>Changement d'avatar</li>
-				<li>Liste des connectés</li>
 				<li>Système de discussion</li>
 				<li>Ajax (xAjax)</li>
 			</ul>

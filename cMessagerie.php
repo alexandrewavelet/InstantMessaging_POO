@@ -18,8 +18,6 @@
 		$action = 0;
 	}
 
-	include("includes/header.php");
-
 	switch ($action) {
 		case 'login':
 			if (isset($_POST['connexion'])) {
@@ -63,7 +61,5 @@
 			include("vues/erreur.php");
 			break;
 	}
-
-	include("includes/footer.php");
 
 ?>
