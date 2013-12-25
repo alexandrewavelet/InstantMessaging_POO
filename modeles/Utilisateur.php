@@ -52,5 +52,11 @@
 			return $this->photo;
 		}
 
+		// Setters simples
+
+		function setPhoto($nouvellePhoto){
+			$this->photo = $nouvellePhoto;
+		}
+
 	}
 ?>

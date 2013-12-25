@@ -56,6 +56,41 @@
 			return $message;
 		}
 
+		function setPhotoUtilisateur($idUtilisateur, $image, $nomImage){
+			if($image['error'] = 0){
+				$info = "Erreur lors du transfert de l'image";
+			}else{
+				$extensions_valides = array('jpg','jpeg');
+				$extension_upload = strtolower(substr(strrchr($image['name'],'.'),1));
+				if(in_array($extension_upload,$extensions_valides)){
+					if($nomImage == "defaut.jpg") {
+						$nomImage = md5(uniqid(rand(), true));
+						$nomImage = $nomImage.".".$extension_upload;
+						$_SESSION['utilisateur']->setPhoto($nomImage);
+						$req = $this->connexion->getConnexion()->prepare('UPDATE utilisateurs SET photo = ? WHERE id = ?');
+						$req->execute(array($nomImage, $idUtilisateur));
+					}
+					$tailleImage = getimagesize($image['tmp_name']);
+					$largeur = $tailleImage[0];
+					$this->creerImage($image, $nomImage, 200, "assets/images/");
+					$info = "L'image a bien été modifiée.";
+				}else{
+					$info = "Le fichier uploadé n'est pas une image jpeg.";
+				}
+			}
+			return $info;
+		}
+
+		function creerImage($image,$nomImage,$largeur,$dossier){
+			$imageRedimensionnee = imagecreatefromjpeg($image['tmp_name']);
+			$tailleImage = getimagesize($image['tmp_name']);
+			$reduction = ($largeur * 100)/$tailleImage[0];
+			$hauteur = (($tailleImage[1] * $reduction)/100);
+			$imageFinale = imagecreatetruecolor($largeur , $hauteur) or die ("Erreur");
+			imagecopyresampled($imageFinale , $imageRedimensionnee, 0, 0, 0, 0, $largeur, $hauteur, $tailleImage[0],$tailleImage[1]);
+			imagejpeg($imageFinale, $dossier.$nomImage, 100);
+		}
+
 		function getUtilisateur($idUtilisateur){ // Créée un objet Utilisateur correspondant à l'id en paramètre
 
 			return $utilisateur;

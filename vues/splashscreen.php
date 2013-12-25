@@ -25,8 +25,8 @@
 			<h4>Changer l'image du profil</h4>
 			<form role="form" action="cMessagerie.php?action=changerPhoto" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="image">Nouvelle image</label>
-					<input type="file" class="form-control" id="image" name="image" placeholder="Sélectionnez une image">
+					<label for="avatar">Changer l'avatar</label>
+					<input type="file" class="form-control" id="avatar" name="avatar" placeholder="Sélectionnez une image">
 				</div>
 				<button class="boutonHome">Changer</button>
 			</form>

@@ -46,7 +46,10 @@
 
 		case 'changerPhoto':
 			if ($monManager->estConnecte()) {
-				$monManager->setPhoto($_SESSION['utilisateur']->getID()); // à implémenter
+				if (isset($_FILES['avatar'])) {
+					$image = $_FILES['avatar'];
+					$message = $monManager->setPhotoUtilisateur($_SESSION['utilisateur']->getId(), $image, $_SESSION['utilisateur']->getPhoto());
+				}
 				$monManager->MaJListeConnectes();
 				include("vues/splashscreen.php");
 			}else{
