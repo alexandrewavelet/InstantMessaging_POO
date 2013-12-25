@@ -82,14 +82,14 @@
 		}
 
 		function ajoutConnecte($idUtilisateur){ // Ajoute l'utilisateur qui se connecte et met un objet Connectes en session
-			$reqAjout = $this->connexion->getConnexion()->prepare('INSERT INTO connectes (idUtilisateur) VALUES (?)');
+			$reqAjout = $this->connexion->getConnexion()->prepare('INSERT INTO connectes VALUES (?, NOW())');
 			$reqAjout->execute(array($idUtilisateur));
 			$_SESSION['listeConnectes'] = new Connectes();
 			$this->MaJListeConnectes();
 		}
 
 		function MaJListeConnectes(){ // Met à jour la liste des connectés et le timestamp de l'utilisateur courant
-			$reqMaJ = $this->connexion->getConnexion()->prepare('UPDATE connectes SET derniereInteraction = UNIX_TIMESTAMP() WHERE idUtilisateur = ?');
+			$reqMaJ = $this->connexion->getConnexion()->prepare('UPDATE connectes SET derniereInteraction = NOW() WHERE idUtilisateur = ?');
 			$reqMaJ->execute(array($_SESSION['utilisateur']->getId()));
 			$this->supprimerConnectesInactifs();
 			$connectes = array();
@@ -102,12 +102,12 @@
 		}
 
 		function supprimerConnectesInactifs(){
-			$reqSuppression = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE TIMESTAMPDIFF(MINUTE, FROM_UNIXTIME(derniereInteraction), NOW()) > 5');
+			$reqSuppression = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE TIMESTAMPDIFF(MINUTE, derniereInteraction, NOW()) > 5');
 			$reqSuppression->execute(array());
 		}
 
 		function deconnexionUtilisateur(){ // Supprime l'utilisateur des membres connectés
-			$reqDeconnexion = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE id = ?');
+			$reqDeconnexion = $this->connexion->getConnexion()->prepare('DELETE FROM connectes WHERE idUtilisateur = ?');
 			$reqDeconnexion->execute(array($_SESSION['utilisateur']->getId()));
 			$this->supprimerConnectesInactifs();
 		}

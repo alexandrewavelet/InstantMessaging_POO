@@ -24,12 +24,26 @@
 		case 'login':
 			if (isset($_POST['connexion'])) {
 				$message = $monManager->connexionUtilisateur($_POST['login'], $_POST['mdp']);
+				include("vues/splashscreen.php");
 			}elseif (isset($_POST['inscription'])) {
 				$message = $monManager->creerUtilisateur($_POST['login'], $_POST['mdp']);
+				include("vues/splashscreen.php");
+			}else{
+				$messageErreur = "<p>Vous êtes arrivés ici par erreur.</p>";
+				include("vues/erreur.php");
 			}
-			include("vues/splashscreen.php");
 			break;
 		
+		case 'home':
+			if ($monManager->estConnecte()) {
+				$monManager->MaJListeConnectes();
+				include("vues/splashscreen.php");
+			}else{
+				$messageErreur = "<p>Il faut être connecté pour voir cette page.</p>";
+				include("vues/erreur.php");
+			}
+			break;
+
 		default:
 			$messageErreur = "<p>Désolé, une erreur est survenue.</p>";
 			include("vues/erreur.php");

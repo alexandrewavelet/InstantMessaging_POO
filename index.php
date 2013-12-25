@@ -59,14 +59,15 @@
 			<h1>Fonctionnalités</h1>
 			<p>Fonctionnalités implémentées :</p>
 			<ul>
-				<li>Classes objet abstraites</li>
+				<li>Classes PHP</li>
 				<li>Page d'accueil</li>
 				<li>Création de la BDD</li>
 				<li>Inscription / Connexion</li>
+				<li>Splashscreen (et inteface connectés, dialogue) : en cours</li>
 			</ul>
 			<p>Fonctionnalités à venir :</p>
 			<ul>
-				<li>Interface de discussion / landing</li>
+				<li>Changement d'avatar</li>
 				<li>Liste des connectés</li>
 				<li>Système de discussion</li>
 				<li>Ajax (xAjax)</li>

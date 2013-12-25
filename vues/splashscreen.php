@@ -2,8 +2,10 @@
 
 	if (isset($message)) {
 		echo $message;
+		
 	}
-
+echo '<br/>';
+		var_dump($_SESSION['listeConnectes']);
 ?>
 
 <h3>Informations du profil</h3>
