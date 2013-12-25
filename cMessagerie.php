@@ -44,6 +44,17 @@
 			}
 			break;
 
+		case 'changerPhoto':
+			if ($monManager->estConnecte()) {
+				$monManager->setPhoto($_SESSION['utilisateur']->getID()); // à implémenter
+				$monManager->MaJListeConnectes();
+				include("vues/splashscreen.php");
+			}else{
+				$messageErreur = "<p>Il faut être connecté pour voir cette page.</p>";
+				include("vues/erreur.php");
+			}
+			break;
+
 		default:
 			$messageErreur = "<p>Désolé, une erreur est survenue.</p>";
 			include("vues/erreur.php");

@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 4.0.3
 -- http://www.phpmyadmin.net
 --
 -- Client: 127.0.0.1
--- Généré le: Lun 23 Décembre 2013 à 23:38
--- Version du serveur: 5.5.27-log
--- Version de PHP: 5.4.6
+-- Généré le: Mer 25 Décembre 2013 à 10:04
+-- Version du serveur: 5.6.12-log
+-- Version de PHP: 5.5.0
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `instantmessaging`
 --
+CREATE DATABASE IF NOT EXISTS `instantmessaging` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `instantmessaging`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `connectes` (
   `idUtilisateur` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `derniereInteraction` datetime NOT NULL,
   PRIMARY KEY (`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -70,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(50) NOT NULL,
   `mdp` varchar(50) NOT NULL,
-  `photo` varchar(50) NOT NULL DEFAULT 'defaut.jpg',
+  `photo` varchar(50) NOT NULL DEFAULT 'avatar-defaut.jpg',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -79,8 +81,18 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`id`, `login`, `mdp`, `photo`) VALUES
-(2, 'alexandre', 'ab4f63f9ac65152575886860dde480a1', 'defaut.jpg'),
-(3, 'awavelet', 'ab4f63f9ac65152575886860dde480a1', 'defaut.jpg');
+(2, 'alexandre', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg'),
+(3, 'awavelet', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg');
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `connectes`
+--
+ALTER TABLE `connectes`
+  ADD CONSTRAINT `connectes_ibfk_1` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

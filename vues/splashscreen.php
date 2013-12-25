@@ -4,8 +4,7 @@
 		echo $message;
 		
 	}
-echo '<br/>';
-		var_dump($_SESSION['listeConnectes']);
+	
 ?>
 
 <h3>Informations du profil</h3>
@@ -29,6 +28,7 @@ echo '<br/>';
 					<label for="image">Nouvelle image</label>
 					<input type="file" class="form-control" id="image" name="image" placeholder="Sélectionnez une image">
 				</div>
+				<button class="boutonHome">Changer</button>
 			</form>
 		</div>
 	</div>
