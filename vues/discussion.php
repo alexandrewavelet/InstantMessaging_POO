@@ -4,9 +4,13 @@
 	
 ?>
 
-<h3>Informations du profil</h3>
-<div class="container zoneMessages">
-
+<h2>Conversation</h2>
+<div class="zoneMessages">
+	<?php
+		foreach ($messages as $message) {
+			$message->afficher();
+		}
+	?>
 </div>
 <form role="form" method="POST" action="this">
 	<div class="form-group">

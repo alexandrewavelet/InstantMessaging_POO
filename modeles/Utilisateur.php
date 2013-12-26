@@ -23,6 +23,10 @@
 			return $idConversation;
 		}
 
+		function getConversation($id){
+			return $this->conversations[$id];
+		}
+
 		function getConversationAvec($idUtilisateur){ // Retourne la conversation avec l'utilisateur en paramètre, la créée sinon
 
 			return $conversation;
@@ -34,7 +38,7 @@
 		}
 
 		function MaJConversation($idConversation, $messages){
-			$this->$conversations[$idConversation]->MaJMessages($messages);
+			$this->conversations[$idConversation]->MaJMessages($messages);
 		}
 
 		function afficherUtilisateurConversation(){ // Affiche les infos de l'utilisateur dans la zone de messages

@@ -65,6 +65,7 @@
 					}else{
 						$idConversation = $monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
 					}
+					$messages = $_SESSION['utilisateur']->getConversation($idConversation)->getMessages();
 					include("vues/discussion.php");
 				}else{
 					$messageErreur = "<p>Il n'y a personne avec qui parler.</p>";

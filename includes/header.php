@@ -25,4 +25,3 @@
 			<?php echo $_SESSION['listeConnectes']->afficherListe(); ?>
 		</div>
 		<div class="col-md-8">
-			<h2>Mon profil</h2>

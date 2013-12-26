@@ -6,15 +6,21 @@
 		protected $date;
 		protected $idUtilisateurEnvoyeur;
 		
-		function __construct($pid, $pcontenu, pdate, $pidUtilisateur){ // Constructeur
-			$this->$id = $pid;
-			$this->$contenu = $pcontenu;
-			$this->$date = $pdate;
-			$this->$idUtilisateurEnvoyeur = $pidUtilisateur;
+		function __construct($pid, $pcontenu, $pdate, $pidUtilisateur){ // Constructeur
+			$this->id = $pid;
+			$this->contenu = $pcontenu;
+			$this->date = $pdate;
+			$this->idUtilisateurEnvoyeur = $pidUtilisateur;
 		}
 
-		function afficherMessage(){ // Affiche le message dans la zone de messagerie
-
+		function afficher(){ // Affiche le message dans la zone de messagerie
+			if ($this->estDeMoi()) {
+				echo '<div class="message gris">';
+			}else{
+				echo '<div class="message messagedroite cadrebleu">';
+			}
+			echo '<p>De '.$this->idUtilisateurEnvoyeur.' à '.$this->date.'</p>';
+			echo $this->contenu.'</div>';
 		}
 
 		function estDeMoi(){ // Vérifie si le message viens de l'utilisateur ou de son correspondant

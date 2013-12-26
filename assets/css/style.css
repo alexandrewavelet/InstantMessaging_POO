@@ -16,6 +16,10 @@ body{
 	color: #37769f;
 }
 
+.cadrebleu{
+	background-color: #37769f;
+}
+
 .jumbotron{
 	padding-left: 10%;
 }
@@ -55,4 +59,14 @@ body{
 	min-height: 300px;
 	overflow: auto;
 	height: 50%;
+	width: 50%;
+}
+
+.message{
+	width: 70%;
+	margin: 15px;
+	padding: 10px;
+}
+.messagedroite{
+	margin-left: 15%;
 }

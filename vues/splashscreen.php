@@ -2,6 +2,8 @@
 
 	include("includes/header.php");
 
+	echo '<h2>Mon profil</h2>';
+
 	if (isset($message)) {
 		echo $message;
 		
