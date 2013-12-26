@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: 127.0.0.1
--- Généré le: Mer 25 Décembre 2013 à 10:04
+-- Généré le: Jeu 26 Décembre 2013 à 14:00
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.5.0
 
@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS `connectes` (
   PRIMARY KEY (`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `connectes`
+--
+
+INSERT INTO `connectes` (`idUtilisateur`, `derniereInteraction`) VALUES
+(2, '2013-12-26 13:35:12'),
+(3, '2013-12-26 13:35:04');
+
 -- --------------------------------------------------------
 
 --
@@ -45,7 +53,15 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `idUtilisateur1` int(11) NOT NULL,
   `idUtilisateur2` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `conversations`
+--
+
+INSERT INTO `conversations` (`id`, `idUtilisateur1`, `idUtilisateur2`) VALUES
+(1, 2, 3),
+(2, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -57,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idConversation` int(11) NOT NULL,
   `idUtilisateur` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateMessage` datetime NOT NULL,
   `contenu` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -74,15 +90,17 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `mdp` varchar(50) NOT NULL,
   `photo` varchar(50) NOT NULL DEFAULT 'avatar-defaut.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Contenu de la table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`id`, `login`, `mdp`, `photo`) VALUES
-(2, 'alexandre', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg'),
-(3, 'awavelet', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg');
+(2, 'alexandre', 'ab4f63f9ac65152575886860dde480a1', '322d9f2913164b20e47d63ea776eb21e.jpg'),
+(3, 'awavelet', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg'),
+(4, 'awav', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg'),
+(5, 'alex', 'ab4f63f9ac65152575886860dde480a1', 'avatar-defaut.jpg');
 
 --
 -- Contraintes pour les tables exportées
