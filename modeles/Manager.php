@@ -97,14 +97,15 @@
 		}
 
 		function ouvrirConversation($idUtilisateurConnecte, $idUtilisateur){
-			$req = $this->connexion->getConnexion()->prepare('SELECT COUNT(*) FROM conversations WHERE idUtilisateur1 = ? AND idUtilisateur2 = ?');
-			$req->execute(array($idUtilisateurConnecte, $idUtilisateur));
+			$req = $this->connexion->getConnexion()->prepare('SELECT COUNT(*) FROM conversations WHERE (idUtilisateur1 = ? OR idUtilisateur1= ?) AND (idUtilisateur2 = ? OR idUtilisateur2 = ?)');
+			$req->execute(array($idUtilisateurConnecte, $idUtilisateur, $idUtilisateurConnecte, $idUtilisateur));
 			$conversation = $req->fetch()[0];
 			if ($conversation == 0) {
-				$this->creerConversation($idUtilisateurConnecte, $idUtilisateur);
+				$idConversation = $this->creerConversation($idUtilisateurConnecte, $idUtilisateur);
 			}else{
-				$this->getConversation($idUtilisateurConnecte, $idUtilisateur);
+				$idConversation = $this->getConversation($idUtilisateurConnecte, $idUtilisateur);
 			}
+			return $idConversation;
 		}
 
 		function conversationEnMemoire($idCorrespondant){
@@ -115,8 +116,10 @@
 			return $reponse;
 		}
 
-		function MaJConversation(){ // Met à jour une conversation
-
+		function MaJConversation($idConversation){ // Renvoie la liste des messages de la conversation en paramètres
+			$messages = array();
+			// requête + boucle
+			return $messages;
 		}
 
 		function creerConversation($idUtil, $idCorrespondant){ // Créée une conversation entre les 2 utilisateurs
@@ -125,13 +128,25 @@
 			$idConversation = $this->connexion->getConnexion()->lastInsertId();
 			$conversation = new Conversation($idConversation, $idCorrespondant);
 			$_SESSION['utilisateur']->ajouterConversation($conversation);
+			return $idConversation;
 		}
 
-		function getConversation($idUtil, $idCorrespondant){ // Retoune la conversation entre l'utilisateur et son correspondant
-
+		function getConversation($idUtil, $idCorrespondant){ // met en session la conversation entre l'utilisateur et son correspondant
+			$req = $this->connexion->getConnexion()->prepare('SELECT id, idUtilisateur1, idUtilisateur2 FROM conversations WHERE (idUtilisateur1 = ? OR idUtilisateur1= ?) AND (idUtilisateur2 = ? OR idUtilisateur2 = ?)');
+			$req->execute(array($idUtil, $idCorrespondant, $idUtil, $idCorrespondant));
+			$donneesConversation = $req->fetch();
+			if ($donneesConversation[1] == $_SESSION['utilisateur']->getId()) {
+				$destinataire = $donneesConversation[2];
+			}else{
+				$destinataire =$donneesConversation[1];
+			}
+			$messages = $this->MaJConversation($donneesConversation[0]);
+			$conversation = new Conversation($donneesConversation[0], $destinataire, $messages);
+			$_SESSION['utilisateur']->ajouterConversation($conversation);
+			return $donneesConversation[0];
 		}
 
-		function getMessagesConversation($idConversation){ // Retroune la liste des messages de la conversation en paramètre
+		function getMessagesConversation($idConversation){ // Retourne la liste des messages de la conversation en paramètre
 
 			return $listeMessages;
 		}

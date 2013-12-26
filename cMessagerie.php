@@ -59,10 +59,11 @@
 		case 'conversation':
 			if ($monManager->estConnecte()) {
 				if (isset($_GET['id'])) {
-					if ($monManager->conversationEnMemoire($_GET['id'])) {
-						$monManager->MaJConversation($_GET['id']);
+					$idConversation = $monManager->conversationEnMemoire($_GET['id']);
+					if ($idConversation > 0) {
+						$_SESSION['utilisateur']->MaJConversation($idConversation, $monManager->MaJConversation($idConversation));
 					}else{
-						$monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
+						$idConversation = $monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
 					}
 					include("vues/discussion.php");
 				}else{

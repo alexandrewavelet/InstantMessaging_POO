@@ -11,6 +11,10 @@
 			$this->messages = $pmessages;
 		}
 
+		function MaJMessages($liste){
+			$this->messages = $liste;
+		}
+
 		function Afficher(){ // Affiche les messages de la conversation
 
 		}
