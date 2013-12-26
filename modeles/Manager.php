@@ -150,6 +150,11 @@
 			return $donneesConversation[0];
 		}
 
+		function enregistrerMessage($idConversation, $message){
+			$req = $this->connexion->getConnexion()->prepare('INSERT INTO messages VALUES (0, ?, ?, NOW(), ?)');
+			$req->execute(array($idConversation, $_SESSION['utilisateur']->getId(), $message));
+		}
+
 		function getMessagesConversation($idConversation){ // Retourne la liste des messages de la conversation en paramètre
 
 			return $listeMessages;

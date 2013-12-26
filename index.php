@@ -66,10 +66,14 @@
 				<li>Splashscreen (et inteface connectés, dialogue) : en cours</li>
 				<li>Changement d'avatar</li>
 				<li>Liste des connectés</li>
+				<li>Système de discussion</li>
 			</ul>
 			<p>Fonctionnalités à venir :</p>
 			<ul>
-				<li>Système de discussion</li>
+				<li>Fix affichage de l'envoyeur du message</li>
+				<li>Page d'erreur</li>
+				<li>finition design</li>
+				<li>Sécurité</li>
 				<li>Ajax (xAjax)</li>
 			</ul>
 			<p>Code source disponible sur GitHub : <a href="https://github.com/alexandrewavelet/InstantMessaging_POO/">InstantMessaging</a></p>

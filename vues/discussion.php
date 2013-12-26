@@ -12,7 +12,8 @@
 		}
 	?>
 </div>
-<form role="form" method="POST" action="this">
+<form role="form" method="POST" action="">
+	<?php echo '<input type="hidden" id="idConv" name="idConv" value="'.$idConversation.'" />'; ?>
 	<div class="form-group">
 		<textarea id="message" name="message"></textarea>
 	</div>

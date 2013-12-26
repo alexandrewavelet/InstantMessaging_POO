@@ -59,13 +59,20 @@
 		case 'conversation':
 			if ($monManager->estConnecte()) {
 				if (isset($_GET['id'])) {
-					$idConversation = $monManager->conversationEnMemoire($_GET['id']);
-					if ($idConversation > 0) {
+					if(isset($_POST['envoyer'])){
+						$idConversation = $_POST['idConv'];
+						$monManager->enregistrerMessage($idConversation, $_POST['message']);
 						$_SESSION['utilisateur']->MaJConversation($idConversation, $monManager->MaJConversation($idConversation));
 					}else{
-						$idConversation = $monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
+						$idConversation = $monManager->conversationEnMemoire($_GET['id']);
+						if ($idConversation > 0) {
+							$_SESSION['utilisateur']->MaJConversation($idConversation, $monManager->MaJConversation($idConversation));
+						}else{
+							$idConversation = $monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
+						}
 					}
-					$messages = $_SESSION['utilisateur']->getConversation($idConversation)->getMessages();
+					$monManager->MaJListeConnectes();
+					$messages = $_SESSION['utilisateur']->getConversation($idConversation)->getMessages();						
 					include("vues/discussion.php");
 				}else{
 					$messageErreur = "<p>Il n'y a personne avec qui parler.</p>";
