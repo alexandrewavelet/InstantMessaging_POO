@@ -13,6 +13,16 @@
 			$this->conversations = array();
 		}
 
+		function getConversationParCorrespondant($idCorrespondant){
+			$idConversation = false;
+			foreach ($this->conversations as $conversation) {
+				if ($conversation->getDestinataire() == $idCorrespondant) {
+					$idConversation = $conversation->getId();
+				}
+			}
+			return $idConversation;
+		}
+
 		function getConversationAvec($idUtilisateur){ // Retourne la conversation avec l'utilisateur en paramètre, la créée sinon
 
 			return $conversation;
@@ -27,7 +37,7 @@
 		}
 
 		function ajouterConversation($conversation){ // Ajoute une conversation
-
+			array_push($this->conversations, $conversation);
 		}
 
 		function afficherConversation($idUtilisateur){ // Affiche la conversation correspondante

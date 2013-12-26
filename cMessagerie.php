@@ -56,6 +56,25 @@
 			}
 			break;
 
+		case 'conversation':
+			if ($monManager->estConnecte()) {
+				if (isset($_GET['id'])) {
+					if ($monManager->conversationEnMemoire($_GET['id'])) {
+						$monManager->MaJConversation($_GET['id']);
+					}else{
+						$monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
+					}
+					include("vues/discussion.php");
+				}else{
+					$messageErreur = "<p>Il n'y a personne avec qui parler.</p>";
+					include("vues/erreur.php");
+				}
+			}else{
+				$messageErreur = "<p>Il faut être connecté pour voir cette page.</p>";
+				include("vues/erreur.php");
+			}
+			break;
+
 		default:
 			$messageErreur = "<p>Désolé, une erreur est survenue.</p>";
 			include("vues/erreur.php");

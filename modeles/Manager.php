@@ -96,14 +96,39 @@
 			return $utilisateur;
 		}
 
-		function creerConversation($idUtil, $idCorrespondant){ // Créée une conversation entre les 2 utilisateurs
-
-			return $conversation;
+		function ouvrirConversation($idUtilisateurConnecte, $idUtilisateur){
+			$req = $this->connexion->getConnexion()->prepare('SELECT COUNT(*) FROM conversations WHERE idUtilisateur1 = ? AND idUtilisateur2 = ?');
+			$req->execute(array($idUtilisateurConnecte, $idUtilisateur));
+			$conversation = $req->fetch()[0];
+			if ($conversation == 0) {
+				$this->creerConversation($idUtilisateurConnecte, $idUtilisateur);
+			}else{
+				$this->getConversation($idUtilisateurConnecte, $idUtilisateur);
+			}
 		}
 
-		function getConversation($idUtil, $idCorrespondant){ // Retoune la conversation entre l'utilisateur et un ami
+		function conversationEnMemoire($idCorrespondant){
+			$reponse = false;
+			if ($_SESSION['utilisateur']->getConversationParCorrespondant($idCorrespondant)) {
+				$reponse = true;
+			}
+			return $reponse;
+		}
 
-			return $conversation;
+		function MaJConversation(){ // Met à jour une conversation
+
+		}
+
+		function creerConversation($idUtil, $idCorrespondant){ // Créée une conversation entre les 2 utilisateurs
+			$req = $this->connexion->getConnexion()->prepare('INSERT INTO conversations VALUES (0, ?, ?)');
+			$req->execute(array($idUtil, $idCorrespondant));
+			$idConversation = $this->connexion->getConnexion()->lastInsertId();
+			$conversation = new Conversation($idConversation, $idCorrespondant);
+			$_SESSION['utilisateur']->ajouterConversation($conversation);
+		}
+
+		function getConversation($idUtil, $idCorrespondant){ // Retoune la conversation entre l'utilisateur et son correspondant
+
 		}
 
 		function getMessagesConversation($idConversation){ // Retroune la liste des messages de la conversation en paramètre

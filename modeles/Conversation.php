@@ -5,8 +5,10 @@
 		protected $utilisateurDestinataire;
 		protected $messages;
 		
-		function __construct(){ // Constructeur
-
+		function __construct($pid, $pdest, $pmessages = array()){ // Constructeur
+			$this->id = $pid;
+			$this->utilisateurDestinataire = $pdest;
+			$this->messages = $pmessages;
 		}
 
 		function Afficher(){ // Affiche les messages de la conversation
