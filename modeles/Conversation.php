@@ -15,18 +15,6 @@
 			$this->messages = $liste;
 		}
 
-		function Afficher(){ // Affiche les messages de la conversation
-
-		}
-
-		function ajouterMessage($message){ // Ajoute un message à la conversation
-
-		}
-
-		function afficherDernierMessage(){ // Affiche le dernier message reçu (pour l'AJAX)
-
-		}
-
 		// Getters simples
 
 		function getId(){

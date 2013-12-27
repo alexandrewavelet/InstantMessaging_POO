@@ -159,16 +159,6 @@
 			$req->execute(array($idConversation, $_SESSION['utilisateur']->getId(), $message));
 		}
 
-		function getMessagesConversation($idConversation){ // Retourne la liste des messages de la conversation en paramètre
-
-			return $listeMessages;
-		}
-
-		function ajouterMessageConversation($message, $conversation){ // Ajoute un message à la conversation (AJAX)
-
-			return $conversation;
-		}
-
 		function ajoutConnecte($idUtilisateur){ // Ajoute l'utilisateur qui se connecte et met un objet Connectes en session
 			$reqAjout = $this->connexion->getConnexion()->prepare('INSERT INTO connectes VALUES (?, NOW())');
 			$reqAjout->execute(array($idUtilisateur));

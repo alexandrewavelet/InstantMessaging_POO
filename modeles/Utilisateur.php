@@ -27,11 +27,6 @@
 			return $this->conversations[$id];
 		}
 
-		function getConversationAvec($idUtilisateur){ // Retourne la conversation avec l'utilisateur en paramètre, la créée sinon
-
-			return $conversation;
-		}
-
 		function afficherUtilisateurConnecte(){ // Affiche la vignette de l'utilisateur dans la liste des connectés
 			$ligne = '<tr><td><img class="img-responsive imgListe" src="assets/images/'.$this->photo.'"/></td><td>'.$this->login.'<br/><a href="cMessagerie.php?action=conversation&id='.$this->id.'"><button class="boutonHome liste">Converser</button></a></td></tr>';
 			return $ligne;
@@ -41,16 +36,8 @@
 			$this->conversations[$idConversation]->MaJMessages($messages);
 		}
 
-		function afficherUtilisateurConversation(){ // Affiche les infos de l'utilisateur dans la zone de messages
-
-		}
-
 		function ajouterConversation($conversation){ // Ajoute une conversation
 			$this->conversations[$conversation->getId()] = $conversation;
-		}
-
-		function afficherConversation($idUtilisateur){ // Affiche la conversation correspondante
-
 		}
 
 		// Getters simples
