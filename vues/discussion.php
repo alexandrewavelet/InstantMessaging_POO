@@ -8,7 +8,7 @@
 <div class="zoneMessages">
 	<?php
 		foreach ($messages as $message) {
-			$message->afficher();
+			$message->afficher($destinataire->getLogin());
 		}
 	?>
 </div>
@@ -16,8 +16,8 @@
 	<?php echo '<input type="hidden" id="idConv" name="idConv" value="'.$idConversation.'" />'; ?>
 	<div class="form-group">
 		<textarea id="message" name="message"></textarea>
+		<button type="submit" class="boutonHome btnDiscussion" id="envoyer" name="envoyer">Envoyer</button>
 	</div>
-	<button type="submit" class="boutonHome" id="envoyer" name="envoyer">Envoyer</button>
 </form>
 
 <?php

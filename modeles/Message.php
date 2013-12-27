@@ -13,13 +13,14 @@
 			$this->idUtilisateurEnvoyeur = $pidUtilisateur;
 		}
 
-		function afficher(){ // Affiche le message dans la zone de messagerie
+		function afficher($loginCorrespondant){ // Affiche le message dans la zone de messagerie
 			if ($this->estDeMoi()) {
 				echo '<div class="message gris">';
+				echo '<p>De moi, à '.$this->date.'</p>';
 			}else{
 				echo '<div class="message messagedroite cadrebleu">';
+				echo '<p>De '.$loginCorrespondant.' à '.$this->date.'</p>';
 			}
-			echo '<p>De '.$this->idUtilisateurEnvoyeur.' à '.$this->date.'</p>';
 			echo $this->contenu.'</div>';
 		}
 

@@ -81,6 +81,7 @@
 							$idConversation = $monManager->ouvrirConversation($_SESSION['utilisateur']->getId(), $_GET['id']);
 						}
 					}
+					$destinataire = $monManager->getUtilisateur($_GET['id']);
 					$monManager->MaJListeConnectes();
 					$messages = $_SESSION['utilisateur']->getConversation($idConversation)->getMessages();						
 					include("vues/discussion.php");

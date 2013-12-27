@@ -16,11 +16,23 @@
 			<a href="cMessagerie.php?action=home"><button class="boutonHome petit"><span class="glyphicon glyphicon-home"></span></button></a>
 			<a href="index.php?action=logout"><button class="boutonHome sansMarge">Déconnexion</button></a>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-2">
+			<?php
+				if (isset($destinataire)) {
+					echo '<img class="img-responsive imgListe imgHeader" src="assets/images/'.$destinataire->getPhoto().'"/>';
+				}
+			?>
+		</div>
+		<div class="col-md-6">
+			<?php
+				if (isset($destinataire)) {
+					echo '<h1>Conversation avec '.$destinataire->getLogin().'</h1>';
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3 col-md-offset-1">
+		<div class="col-md-3 col-md-offset-1 connectes">
 			<h2>Conversations</h2>
 			<?php echo $_SESSION['listeConnectes']->afficherListe(); ?>
 		</div>

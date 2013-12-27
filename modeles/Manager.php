@@ -56,6 +56,14 @@
 			return $message;
 		}
 
+		function getUtilisateur($idUtilisateur){
+			$req = $this->connexion->getConnexion()->prepare('SELECT login, photo FROM utilisateurs WHERE id = ?');
+			$req->execute(array($idUtilisateur));
+			$donneesUtilisateur = $req->fetch();
+			$utilisateur = new Utilisateur($idUtilisateur, $donneesUtilisateur['login'], $donneesUtilisateur['photo']);
+			return $utilisateur;
+		}
+
 		function setPhotoUtilisateur($idUtilisateur, $image, $nomImage){
 			if($image['error'] = 0){
 				$info = "Erreur lors du transfert de l'image";
@@ -91,11 +99,6 @@
 			imagejpeg($imageFinale, $dossier.$nomImage, 100);
 		}
 
-		function getUtilisateur($idUtilisateur){ // Créée un objet Utilisateur correspondant à l'id en paramètre
-
-			return $utilisateur;
-		}
-
 		function ouvrirConversation($idUtilisateurConnecte, $idUtilisateur){
 			$req = $this->connexion->getConnexion()->prepare('SELECT COUNT(*) FROM conversations WHERE (idUtilisateur1 = ? OR idUtilisateur1= ?) AND (idUtilisateur2 = ? OR idUtilisateur2 = ?)');
 			$req->execute(array($idUtilisateurConnecte, $idUtilisateur, $idUtilisateurConnecte, $idUtilisateur));
@@ -109,9 +112,10 @@
 		}
 
 		function conversationEnMemoire($idCorrespondant){
-			$reponse = false;
-			if ($_SESSION['utilisateur']->getConversationParCorrespondant($idCorrespondant)) {
-				$reponse = true;
+			$reponse = 0;
+			$idConversation = $_SESSION['utilisateur']->getConversationParCorrespondant($idCorrespondant);
+			if ($idConversation > 0) {
+				$reponse = $idConversation;
 			}
 			return $reponse;
 		}
