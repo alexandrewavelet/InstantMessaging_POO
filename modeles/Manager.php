@@ -14,7 +14,7 @@
 				$reqLogin->execute(array($login));
 				$loginExiste = $reqLogin->fetch()['nombre'];
 				if ($loginExiste > 0) {
-					$message = "<p>Le login que vous avez choisi est déjà pris, veuillez en choisir un nouveau.</p>";
+					$message = array(false,"<p>Le login que vous avez choisi est déjà pris, veuillez en choisir un nouveau.</p>");
 				}else{
 					$req = $this->connexion->getConnexion()->prepare('INSERT INTO utilisateurs VALUES (0, ?, ?, "avatar-defaut.jpg")');
 					$req->execute(array($login,md5($motDePasse)));
@@ -24,7 +24,7 @@
 					$message = "<p>Inscription réussie, vous pouvez commencer à utiliser la messagerie.</p>";
 				}
 			}catch(PDOException $e){
-				$message = "<p>une erreur est survenue, veuillez réessayer.</p>";
+				$message = array(false,"<p>une erreur est survenue, veuillez réessayer.</p>");
 			}
 			return $message;
 		}
@@ -48,10 +48,10 @@
 					$message = "<p>Connexion réussie.</p>";
 					$this->ajoutConnecte($res['id']);
 				}else{
-					$message = "<p>La combinaison login/mot de passe est incorrecte.</p>";
+					$message = array(false,"<p>La combinaison login/mot de passe est incorrecte.</p>");
 				}
 			}catch(PDOException $e){
-				$message = "<p>Une erreur est survenue, veuillez réessayer.</p>";
+				$message = array(false,"<p>Une erreur est survenue, veuillez réessayer.</p>");
 			}
 			return $message;
 		}
@@ -63,7 +63,7 @@
 				$extensions_valides = array('jpg','jpeg');
 				$extension_upload = strtolower(substr(strrchr($image['name'],'.'),1));
 				if(in_array($extension_upload,$extensions_valides)){
-					if($nomImage == "defaut.jpg") {
+					if($nomImage == "avatar-defaut.jpg") {
 						$nomImage = md5(uniqid(rand(), true));
 						$nomImage = $nomImage.".".$extension_upload;
 						$_SESSION['utilisateur']->setPhoto($nomImage);

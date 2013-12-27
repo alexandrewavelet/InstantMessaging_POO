@@ -22,10 +22,20 @@
 		case 'login':
 			if (isset($_POST['connexion'])) {
 				$message = $monManager->connexionUtilisateur($_POST['login'], $_POST['mdp']);
-				include("vues/splashscreen.php");
+				if ($message[0] == false) {
+					$messageErreur = $message[1];
+					include("vues/erreur.php");
+				}else{
+					include("vues/splashscreen.php");					
+				}
 			}elseif (isset($_POST['inscription'])) {
 				$message = $monManager->creerUtilisateur($_POST['login'], $_POST['mdp']);
-				include("vues/splashscreen.php");
+				if ($message[0] == false) {
+					$messageErreur = $message[1];
+					include("vues/erreur.php");
+				}else{
+					include("vues/splashscreen.php");					
+				}
 			}else{
 				$messageErreur = "<p>Vous êtes arrivés ici par erreur.</p>";
 				include("vues/erreur.php");
