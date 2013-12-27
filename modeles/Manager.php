@@ -122,7 +122,7 @@
 
 		function MaJConversation($idConversation){ // Renvoie la liste des messages de la conversation en paramètres
 			$messages = array();
-			$req = $this->connexion->getConnexion()->prepare('SELECT id, idUtilisateur, dateMessage, contenu FROM messages WHERE idConversation = ?');
+			$req = $this->connexion->getConnexion()->prepare('SELECT id, idUtilisateur, date_format(dateMessage, \'%d/%m/%Y \à %H:%i:%S\') AS dateMessage, contenu FROM messages WHERE idConversation = ?');
 			$req->execute(array($idConversation));
 			while ($ligne = $req->fetch()) {
 				array_push($messages, new Message($ligne['id'], $ligne['contenu'], $ligne['dateMessage'], $ligne['idUtilisateur']));
